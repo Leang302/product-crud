@@ -1,6 +1,6 @@
 package com.example.productscrud.jwt;
 
-import com.leang.jwtpractice.model.entity.AppUser;
+import com.example.productscrud.model.entity.AppUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -17,7 +17,7 @@ import java.util.function.Function;
 @Component
 public class JwtService {
 
-    public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60; //5 hour
+    public static final long JWT_TOKEN_VALIDITY = 60;
     public static final String SECRET = "FVPr6Q/fVlHGZkElZubC0Zaxv657dPUfDQ4o9DADjSin7+uST1d2A5klMWrMK8fmSl3doyf2wn5zj56VC+qqCg==";
 
     private String createToken(Map<String, Object> claim, String subject) {
@@ -39,7 +39,7 @@ public class JwtService {
         Map<String, Object> claims = new HashMap<>();
         AppUser appUser = (AppUser) userDetails;
         claims.put("user_id", appUser.getUserId());
-        return createToken(claims, appUser.getEmail());
+        return createToken(claims, appUser.getUsername());
     }
 
     //3. retrieving any information from token we will need the secret key

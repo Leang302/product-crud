@@ -1,4 +1,4 @@
-package com.example.productscrud.model.request;
+package com.example.productscrud.model.dto.request;
 
 import com.example.productscrud.model.entity.AppUser;
 import lombok.AllArgsConstructor;

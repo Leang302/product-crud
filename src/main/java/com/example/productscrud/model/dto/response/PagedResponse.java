@@ -1,4 +1,4 @@
-package com.example.productscrud.model.response;
+package com.example.productscrud.model.dto.response;
 
 import lombok.*;
 

@@ -1,31 +1,50 @@
 package com.example.productscrud.controller;
 
-
-import com.example.productscrud.model.response.ApiResponse;
-import com.example.productscrud.model.response.Status;
+import com.example.productscrud.model.dto.response.ApiResponse;
+import com.example.productscrud.model.dto.response.Status;
+import com.example.productscrud.model.enumeration.code.ResponseCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 public class BaseController {
-    public <T,K> ResponseEntity<ApiResponse<T,K>> responseEntity(String message, HttpStatus httpStatus,K code,
-                                                             T data) {
-        ApiResponse<T,K> response = ApiResponse.<T,K>builder()
+
+    public <T> ResponseEntity<ApiResponse<T>> responseEntity(
+            ResponseCode code,
+            T data
+    ) {
+        return responseEntity(code, code.getDefaultMessage(), HttpStatus.OK, data);
+    }
+
+    public <T> ResponseEntity<ApiResponse<T>> responseEntity(
+            ResponseCode code,
+            String message,
+            T data
+    ) {
+        return responseEntity(code, message, HttpStatus.OK, data);
+    }
+
+    public <T> ResponseEntity<ApiResponse<T>> responseEntity(
+            ResponseCode code,
+            String message,
+            HttpStatus httpStatus,
+            T data
+    ) {
+        ApiResponse<T> response = ApiResponse.<T>builder()
+                .status(new Status(code.getCode(), message))
                 .data(data)
-                .status(new Status<>(code,message))
                 .build();
+
         return ResponseEntity.status(httpStatus).body(response);
     }
 
-    public <T,K> ResponseEntity<ApiResponse<T,K>> responseEntity(String message, K code,
-                                                                 T data) {
-        return responseEntity(message, HttpStatus.OK,code, data);
-    }
+    public ResponseEntity<ApiResponse<Void>> responseEntity(
+            ResponseCode code,
+            HttpStatus httpStatus
+    ) {
+        ApiResponse<Void> response = ApiResponse.<Void>builder()
+                .status(new Status(code.getCode(), code.getDefaultMessage()))
+                .build();
 
-    public <T,K> ResponseEntity<ApiResponse<T,K>> responseEntity(String message,K code) {
-        return responseEntity(message, HttpStatus.OK,code, null);
-    }
-
-    public <T,K> ResponseEntity<ApiResponse<T,K>> responseEntity(String message, HttpStatus httpStatus,K code) {
-        return responseEntity(message, httpStatus,code, null);
+        return ResponseEntity.status(httpStatus).body(response);
     }
 }

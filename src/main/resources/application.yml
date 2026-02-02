@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: productsCrud
+
+  datasource:
+    url: jdbc:postgresql:///app_db
+    username: app_user
+    password: secret999
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
