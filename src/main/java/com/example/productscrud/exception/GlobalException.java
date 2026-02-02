@@ -113,20 +113,7 @@ public class GlobalException {
         return problemDetailResponseEntity(errors, "Method Parameter Validation Failed");
     }
 
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ProblemDetail> notFoundException(NotFoundException e) {
-        return problemDetailResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
-    }
 
-    @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<ProblemDetail> badRequestException(BadRequestException e) {
-        return problemDetailResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(ResourceAlreadyExist.class)
-    public ResponseEntity<ProblemDetail> resourceAlreadyExist(ResourceAlreadyExist e) {
-        return problemDetailResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
-    }
 
     // Handle all unhandled exceptions
     @ExceptionHandler(Exception.class)
