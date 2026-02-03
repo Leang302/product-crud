@@ -4,6 +4,7 @@ import com.example.productscrud.model.entity.AppUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -16,21 +17,22 @@ import java.util.function.Function;
 
 @Component
 public class JwtService {
-
-    public static final long JWT_TOKEN_VALIDITY = 60;
-    public static final String SECRET = "FVPr6Q/fVlHGZkElZubC0Zaxv657dPUfDQ4o9DADjSin7+uST1d2A5klMWrMK8fmSl3doyf2wn5zj56VC+qqCg==";
+    @Value("${token.expires-in:3600}")
+    private long jwtTokenValidity;
+    @Value("${token.secret}")
+    private String injectedSecret;
 
     private String createToken(Map<String, Object> claim, String subject) {
         return Jwts.builder()
                 .claims(claim)
                 .subject(subject)
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
+                .expiration(new Date(System.currentTimeMillis() + jwtTokenValidity * 1000))
                 .signWith(getSignKey()).compact();
     }
 
     private SecretKey getSignKey() {
-        byte[] keyBytes = Base64.getDecoder().decode(SECRET);
+        byte[] keyBytes = Base64.getDecoder().decode(injectedSecret);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 

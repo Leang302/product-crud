@@ -1,5 +1,6 @@
 package com.example.productscrud.model.dto.response;
 
+import com.example.productscrud.model.enumeration.AppUserRole;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -11,5 +12,5 @@ import java.util.UUID;
 public class AuthUserResponse {
     private UUID userId;
     private String username;
-    private Set<String> roles;
+    private Set<AppUserRole> roles;
 }
