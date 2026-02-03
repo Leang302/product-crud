@@ -45,8 +45,9 @@ public class SecurityConfig {
                                                    JwtAuthEntryPoint jwtAuthEntryPoint) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("api/v1/auths/login", "api/v1/auths/register", "/v3/api-docs/**",
+                        .requestMatchers("/api/v1/auths/login", "/api/v1/auths/register", "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html"
                         ).permitAll()

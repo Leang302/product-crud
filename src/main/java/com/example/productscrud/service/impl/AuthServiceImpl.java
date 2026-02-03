@@ -154,7 +154,7 @@ public class AuthServiceImpl implements AuthService {
         return AuthResponse.builder()
                 .accessToken(accessToken)
                 .tokenType("Bearer")
-                .expiresIn(3600)
+                .expiresIn(Math.toIntExact(jwtTokenValidity))
                 .user(userInfo)
                 .build();
     }
